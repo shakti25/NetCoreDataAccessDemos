@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Validations.Rules;
+﻿using Microsoft.EntityFrameworkCore;
 using RToora.DemoWebApi.API.Data;
 using RToora.DemoWebApi.API.Data.Entities;
 
