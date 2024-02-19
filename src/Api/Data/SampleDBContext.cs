@@ -18,5 +18,10 @@ public class SampleDBContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<string>().HaveMaxLength(500);
+    }
+
     public DbSet<Blog> Blogs { get; set; }
 }
