@@ -10,5 +10,9 @@ public class GeneroEntityConfiguration : IEntityTypeConfiguration<Genero>
     {
         builder.Property(g => g.Nombre).IsRequired();
         builder.Property(g => g.Nombre).HasMaxLength(150);
+
+        var cienciaFiccion = new Genero { Id = 5, Nombre = "Ciencia Ficción" };
+        var animacion = new Genero { Id = 6, Nombre = "Animación" };
+        builder.HasData(cienciaFiccion, animacion);
     }
 }
