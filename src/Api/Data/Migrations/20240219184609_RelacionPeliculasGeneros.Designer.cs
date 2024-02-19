@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RToora.DemoWebApi.API.Data;
 
@@ -11,9 +12,11 @@ using RToora.DemoWebApi.API.Data;
 namespace RToora.DemoWebApi.API.Data.Migrations
 {
     [DbContext(typeof(SampleDBContext))]
-    partial class SampleDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240219184609_RelacionPeliculasGeneros")]
+    partial class RelacionPeliculasGeneros
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,29 +150,6 @@ namespace RToora.DemoWebApi.API.Data.Migrations
                     b.ToTable("Peliculas");
                 });
 
-            modelBuilder.Entity("RToora.DemoWebApi.API.Data.Entities.PeliculaActor", b =>
-                {
-                    b.Property<int>("ActorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PeliculaId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Orden")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Personaje")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.HasKey("ActorId", "PeliculaId");
-
-                    b.HasIndex("PeliculaId");
-
-                    b.ToTable("PeliculasActores");
-                });
-
             modelBuilder.Entity("GeneroPelicula", b =>
                 {
                     b.HasOne("RToora.DemoWebApi.API.Data.Entities.Genero", null)
@@ -196,35 +176,9 @@ namespace RToora.DemoWebApi.API.Data.Migrations
                     b.Navigation("Pelicula");
                 });
 
-            modelBuilder.Entity("RToora.DemoWebApi.API.Data.Entities.PeliculaActor", b =>
-                {
-                    b.HasOne("RToora.DemoWebApi.API.Data.Entities.Actor", "Actor")
-                        .WithMany("PeliculasActores")
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RToora.DemoWebApi.API.Data.Entities.Pelicula", "Pelicula")
-                        .WithMany("PeliculasActores")
-                        .HasForeignKey("PeliculaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actor");
-
-                    b.Navigation("Pelicula");
-                });
-
-            modelBuilder.Entity("RToora.DemoWebApi.API.Data.Entities.Actor", b =>
-                {
-                    b.Navigation("PeliculasActores");
-                });
-
             modelBuilder.Entity("RToora.DemoWebApi.API.Data.Entities.Pelicula", b =>
                 {
                     b.Navigation("Comentarios");
-
-                    b.Navigation("PeliculasActores");
                 });
 #pragma warning restore 612, 618
         }

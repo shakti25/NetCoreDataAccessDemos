@@ -28,4 +28,5 @@ public class SampleDBContext : DbContext
     public DbSet<Actor> Actores { get; set; }
     public DbSet<Pelicula> Peliculas { get; set; }
     public DbSet<Comentario> Comentarios { get; set; }
+    public DbSet<PeliculaActor> PeliculasActores { get; set; }
 }

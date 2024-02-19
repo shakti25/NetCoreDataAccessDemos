@@ -10,4 +10,6 @@ public class Pelicula
     public DateTime FechaEstreno { get; set; }
 
     public Collection<Comentario> Comentarios { get; set; } = [];
+    public Collection<Genero> Generos { get; set; } = new Collection<Genero>();
+    public List<PeliculaActor> PeliculasActores { get; set; } = new List<PeliculaActor>();
 }
