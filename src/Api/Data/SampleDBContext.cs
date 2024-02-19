@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RToora.DemoWebApi.API.Data.Entities;
 using System.Reflection;
+using RToora.DemoWebApi.API.Data.Seeding;
 
 namespace RToora.DemoWebApi.API.Data;
 
@@ -16,6 +17,8 @@ public class SampleDBContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        SeedingInicial.Seed(modelBuilder);
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
