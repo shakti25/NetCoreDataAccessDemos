@@ -29,5 +29,6 @@ WeatherEndpoints.Map(app);
 BlogEndpoints.Map(app);
 GenerosEndpoints.Map(app);
 ActoresEndpoints.Map(app);
+PeliculasEndpoints.Map(app);
 
 app.Run();
