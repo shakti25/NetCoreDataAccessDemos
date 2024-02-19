@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RToora.DemoWebApi.API.Data.Entities;
+using System.Reflection;
 
 namespace RToora.DemoWebApi.API.Data;
 
@@ -14,7 +15,7 @@ public class SampleDBContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Blog>().Property(b => b.Url).IsRequired();
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
     public DbSet<Blog> Blogs { get; set; }
