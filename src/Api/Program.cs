@@ -28,5 +28,6 @@ app.UseHttpsRedirection();
 WeatherEndpoints.Map(app);
 BlogEndpoints.Map(app);
 GenerosEndpoints.Map(app);
+ActoresEndpoints.Map(app);
 
 app.Run();
