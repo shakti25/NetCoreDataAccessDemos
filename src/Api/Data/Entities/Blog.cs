@@ -3,5 +3,5 @@
 public class Blog
 {
     public int Id { get; set; }
-    public string Url { get; set; } = null!;
+    public string? Url { get; set; }
 }
