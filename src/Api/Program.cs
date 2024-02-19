@@ -23,5 +23,6 @@ app.UseHttpsRedirection();
 
 // Endpoints
 WeatherEndpoints.Map(app);
+BlogEndpoints.Map(app);
 
 app.Run();
