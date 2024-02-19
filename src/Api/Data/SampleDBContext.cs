@@ -13,6 +13,8 @@ public class SampleDBContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Blog>().Property(b => b.Url).IsRequired();
     }
 
     public DbSet<Blog> Blogs { get; set; }
