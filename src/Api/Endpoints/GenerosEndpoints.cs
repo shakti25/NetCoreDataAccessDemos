@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using RToora.DemoWebApi.API.Data;
 using RToora.DemoWebApi.API.Data.Entities;
@@ -47,5 +48,34 @@ public class GenerosEndpoints
             await context.SaveChangesAsync();
             return Results.Ok();
         }).WithTags("Generos");
+
+        // PUT (modelo conectado)
+        app.MapPut("api/generos/{id:int}", async (int id, SampleDBContext context) =>
+        {
+            var genero = await context.Generos.FirstOrDefaultAsync(g => g.Id == id);
+
+            if(genero is null)
+            {
+                return Results.NotFound();
+            }
+
+            genero.Nombre = $"{genero.Nombre}2";
+
+            await context.SaveChangesAsync();
+
+            return Results.Ok();
+        }).WithTags("Generos");
+
+
+        // PUT (modelo desconectado)
+        app.MapPut("api/generos/v2/{id:int}", async (int id, SampleDBContext context, GeneroCreacionDTO generoCreacionDTO, IMapper mapper) =>
+        {
+            var genero = mapper.Map<Genero>(generoCreacionDTO);
+            genero.Id = id;
+            context.Update(genero);
+            await context.SaveChangesAsync();
+
+            return Results.Ok();
+        }).WithTags("Generos");        
     }
 }
