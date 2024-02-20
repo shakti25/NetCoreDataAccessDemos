@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
 using RToora.DemoWebApi.API.Data;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SampleDBContext>(options => options.UseSqlServer("name=DefaultConnection"));
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;  // this line fixes circular references on eager loading
+});
 
 var app = builder.Build();
 
