@@ -54,5 +54,33 @@ public static class PeliculasEndpoints
             return Results.Ok(pelicula);
 
         }).WithTags("Peliculas");
+
+        // GET (con SELECT LOADING)
+        app.MapGet("api/peliculas/select/{id:int}", async (int id, SampleDBContext context) =>
+        {
+            var pelicula = await context.Peliculas
+                                .Select(pel => new
+                                {
+                                    pel.Id,
+                                    pel.Titulo,
+                                    Generos = pel.Generos.Select(g => g.Nombre).ToList(),
+                                    Actores = pel.PeliculasActores.OrderBy(pa => pa.Orden).Select(pa => new
+                                    {
+                                        Id = pa.ActorId,
+                                        pa.Actor.Nombre,
+                                        pa.Personaje
+                                    }),
+                                    CantidadComentarios = pel.Comentarios.Count()
+                                })
+                                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (pelicula is null)
+            {
+                return Results.NotFound();
+            }
+
+            return Results.Ok(pelicula);
+
+        }).WithTags("Peliculas");
     }
 }
