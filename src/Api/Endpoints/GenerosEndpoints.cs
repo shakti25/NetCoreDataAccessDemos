@@ -76,6 +76,36 @@ public class GenerosEndpoints
             await context.SaveChangesAsync();
 
             return Results.Ok();
-        }).WithTags("Generos");        
+        }).WithTags("Generos");
+
+        // DELETE (moderno)
+        app.MapDelete("api/generos/{id:int}", async (int id, SampleDBContext context) =>
+        {
+            var filasAlteradas = await context.Generos.Where(g => g.Id == id).ExecuteDeleteAsync();
+
+            if(filasAlteradas == 0)
+            {
+                return Results.NotFound();
+            }
+
+            return Results.NoContent();
+        }).WithTags("Generos");
+
+        // DELETE (antiguo)
+        app.MapDelete("api/generos/v2/{id:int}", async (int id, SampleDBContext context) =>
+        {
+            var genero = await context.Generos.FirstOrDefaultAsync(g => g.Id == id);
+
+            if (genero is null)
+            {
+                return Results.NotFound();
+            }
+
+            context.Remove(genero);
+
+            await context.SaveChangesAsync();
+
+            return Results.NoContent();
+        }).WithTags("Generos");
     }
 }
